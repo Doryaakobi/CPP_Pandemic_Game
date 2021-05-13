@@ -10,7 +10,7 @@ Player &Scientist::discover_cure(Color color){
     }
 
     int count = 0;
-    for (auto &card : hand){ // going through the player hand to check for 5 cards with same color.
+    for (const auto &card : hand){ // going through the player hand to check for 5 cards with same color.
         if (City_color.at(card) == color){
             count++;
         }
@@ -35,7 +35,7 @@ Player &Scientist::discover_cure(Color color){
             }
         }
         board.markCure(color);
-        // std::cout << "Scientist discovered cure.\n";
+        std::cout << "Scientist discovered cure.\n";
     }
     else if (count < num){
         throw std::invalid_argument("In order to discover color player needs at least 5 cards of same color!\n");

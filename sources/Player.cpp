@@ -6,7 +6,7 @@ namespace pandemic{
         // Player can take as many cards as he want (no two of the same city).                                                         
         Player& Player::take_card(City city){
             hand.insert(city);
-            // std::cout << "Player Took " + cityString(city) + " card.\n";
+            std::cout << "Player Took " + cityString(city) + " card.\n";
             return *this; 
         }
 
@@ -16,8 +16,8 @@ namespace pandemic{
             if(curr_city == city){
                 throw std::invalid_argument("you dumb fuck\n");
             }
-            City temp;
-            if(board.isConnected(curr_city,city)){
+            City temp = city;
+            if(board.Board::isConnected(curr_city,city)){
                 temp= curr_city;
                 curr_city = city;
                 std::cout << "Player drove from" + cityString(temp) + " to " + cityString(city) +  ".\n";
@@ -28,7 +28,7 @@ namespace pandemic{
 
                 throw std::invalid_argument("Unable to drive between not neighbor cities!\n");
             }
-            check();
+            autoHeal();
             return *this;
         }
 
@@ -45,8 +45,8 @@ namespace pandemic{
 
             curr_city = dst;
             hand.erase(dst);
-            // std::cout << "Player flew direct to" + cityString(dst) + ".\n";
-            check();
+            std::cout << "Player flew direct to" + cityString(dst) + ".\n";
+            autoHeal();
             return *this;
         }
 
@@ -56,9 +56,11 @@ namespace pandemic{
             if(hand.count(curr_city) > 0){
                 hand.erase(curr_city);
                 curr_city = dst;
-            }else throw std::invalid_argument("Player doesn't obtain current city card to fly charter\n");
-            // std::cout << "Player flew charter to" + cityString(dst) + ".\n";
-            check();
+            }else{
+                 throw std::invalid_argument("Player doesn't obtain current city card to fly charter\n");
+            }
+            std::cout << "Player flew charter to" + cityString(dst) + ".\n";
+            autoHeal();
             return *this;
         }
 
@@ -71,10 +73,11 @@ namespace pandemic{
 
             if(board.hasResearch(curr_city) && board.hasResearch(dst)){
                 curr_city = dst;
-            }else throw std::invalid_argument("No research station in both cities!\n");
-            
-            // std::cout << "Player flew shuttle to " + cityString(dst) + ".\n";
-            check();
+            }else{
+                 throw std::invalid_argument("No research station in both cities!\n");
+                }
+            std::cout << "Player flew shuttle to " + cityString(dst) + ".\n";
+            autoHeal();
             return *this;
         }
 
@@ -85,7 +88,7 @@ namespace pandemic{
                 if(!board.hasResearch(curr_city)){
                 board.buildResearch(curr_city);
                 hand.erase(curr_city);
-                // std::cout << "Player threw " + cityString(curr_city) + " card.\n";
+                std::cout << "Player threw " + cityString(curr_city) + " card.\n";
                 return *this;
                 }
             }else if(hand.count(curr_city) == 0){ // If the player doesn't hold the current city card cannot perform build.
@@ -110,18 +113,19 @@ namespace pandemic{
             if(curr_city != city){
             // A player cannot treat a city he's not currently in (Unless he's a Virologist)
                 throw std::invalid_argument("To treat a player current city must be same as " + cityString(city) + "\n");
-            }else if(board[city] == 0){
+            } if(board[city] == 0){
                 throw std::invalid_argument("Current city " + cityString(curr_city) + " has a disease level of 0\n");
-            }else if(board.isCured(City_color.at(curr_city))){
+            } if(board.isCured(City_color.at(curr_city))){
                 // If the city color disease was discovered treat action will drop level to 0
                 board[city] = 0;
-                // std:: cout << "treated " + cityString(curr_city) + " with cure.\n";
+                std:: cout << "treated " + cityString(curr_city) + " with cure.\n";
+                return *this;
             }
-            else {
-                
-                board[city]--;} // no cure discovered therefore disease level decreases by 1.
 
-            // std::cout << "Player treated " + cityString(curr_city) + "\n";
+                
+                board[city]--; // no cure discovered therefore disease level decreases by 1.
+
+            std::cout << "Player treated " + cityString(curr_city) + "\n";
             return *this;
         }
 
@@ -135,7 +139,7 @@ namespace pandemic{
             }
 
             int count = 0;
-            for(auto& card : hand){ // going through the player hand to check for 5 cards with same color.
+            for(const auto& card : hand){ // going through the player hand to check for 5 cards with same color.
                 if(City_color.at(card) == color){
                     count++; 
                 }
@@ -159,25 +163,29 @@ namespace pandemic{
 
                 }
                 board.markCure(color);
-                // std:: cout << "Cured discovered\n" ;
+                std:: cout << "Cured discovered\n" ;
 
-            }else if(count < 5 ){
+            }else if(count < minimal_cards ){
                 throw std::invalid_argument("In order to discover color player needs at least 5 cards of same color!\n");
             }
 
             return *this;
         }
 
-        void Player::show_hand(){
+        std::ostream& operator<<(std::ostream& out, const Player& p){
+
+            out << "Player's Hand: ";
             std:: cout << "{";
-            for(auto& card : hand){
-                std:: cout << cityString(card) + ",";
+            for(const auto& card : p.hand){
+                if(card != *p.hand.rbegin()){
+                    std:: cout << cityString(card) + ",";
+                }
+                std:: cout << cityString(card);
+
             }
             std:: cout << "}\n";
-
+            return out;
         }
-
-
 
 
         Player::~Player(){}

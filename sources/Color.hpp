@@ -1,5 +1,6 @@
 #pragma once
 #include "City.hpp"
+#include <stdlib.h>
 
 enum Color{
     Black,
@@ -8,13 +9,13 @@ enum Color{
     Yellow
 };
 
-// std::string colorString(Color c){
+inline std::string colorString(Color c){
     
-//     if(c == Color::Black) { return "Black"; }
-//     if(c == Color::Red) { return "Red"; }
-//     if(c == Color::Blue) { return "Blue"; }
-//     else { return "Yellow"; }
-// }
+    if(c == Color::Black) {return "Black"; }
+    if(c == Color::Red) {return "Red"; }
+    if(c == Color::Blue) {return "Blue"; }
+    else { return "Yellow";}
+}
 
 inline std::string getCityColor(int c) {
 

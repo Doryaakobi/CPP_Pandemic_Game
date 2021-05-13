@@ -14,6 +14,7 @@ namespace pandemic{
         std::map<City,int> disease_level;
         std::set<Color> cured;
         std::set<City> research_stations;
+        // std::set<pandemic::Player> players;
 
         public:
         
@@ -23,14 +24,14 @@ namespace pandemic{
 
         bool is_clean();
         void remove_cures();
-        int& operator[](City city);
+        // void addplayer(pandemic::Player);
+        int& operator[](City);
         bool isConnected(City&,City&);
         void markCure(Color);
         bool isCured(Color);
         bool hasResearch(City&);
         void buildResearch(City&);
-        friend std::ostream& operator<<(std::ostream& out, const Board& b);
-        void print_cured();
+        friend std::ostream& operator<<(std::ostream&, const Board&);
 
 
 

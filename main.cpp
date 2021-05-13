@@ -37,16 +37,25 @@ int main(){
     Player p{b,City::Atlanta};
     p.take_card(City::Atlanta).build();
     take_5Blue_cards(p);
-    p.show_hand();
+    cout << p << endl;
     std:: cout << p.role() << "\n";
     b[City::Atlanta] = 5;
+    b[City::Algiers] = 5;
+    b[City::Baghdad] = 5;
+    b[City::BuenosAires] = 5;
+    b[City::Chicago] = 5;
+    b[City::Johannesburg] = 5;
+    b[City::Madrid] = 5;
+    b[City::Jakarta] = 5;
+    b[City::Madrid] = 5;
+    b[City::Montreal] = 5;
 
     std::cout << "b[City::Atlanta] = " << b[City::Atlanta] << "\n";
     p.discover_cure(Color::Blue);
     p.treat(City::Atlanta);
     std::cout << "b[City::Atlanta] = " << b[City::Atlanta] << "\n";
 
-    // cout << p.role();
+    cout << b << endl;
 
 
 

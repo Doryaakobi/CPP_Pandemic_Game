@@ -11,7 +11,7 @@ namespace pandemic{
         public:
             Medic(Board& board, City city): Player(board, city,"Medic") {}
             Player& treat(City city) override;
-            void check() override;
+            void autoHeal() override;
 
             ~Medic(){}
     };

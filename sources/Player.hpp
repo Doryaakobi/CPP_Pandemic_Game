@@ -19,20 +19,22 @@ namespace pandemic{
 
             Player(Board& board, City city , std::string exp = "Default"): board(board), curr_city(city) , expertise(exp){}
 
-            Player& take_card(City city);
-            Player& drive(City city);
-            Player& fly_charter(City city);
-            Player& fly_shuttle(City city);
+            Player& take_card(City);
+            Player& drive(City);
+            Player& fly_charter(City);
+            Player& fly_shuttle(City);
             void show_hand();
-            std::string role(){return expertise;}
+            std::string role(){return "Player expertise: " + expertise + "\n";}
+            friend std::ostream& operator<<(std::ostream&, const Player&);
+
             
             // These functions are virtual due to the reason each player had different capabilities using the same method
             // therefore we need to override these functions for the different characters of the game.
-            virtual Player& fly_direct(City city);
+            virtual Player& fly_direct(City);
             virtual Player& build();
-            virtual Player& discover_cure(Color color);
-            virtual Player& treat(City city);
-            virtual void check(){};
+            virtual Player& discover_cure(Color);
+            virtual Player& treat(City);
+            virtual void autoHeal(){};
 
             ~Player();
     };

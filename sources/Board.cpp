@@ -4,7 +4,7 @@ using namespace std;
 namespace pandemic
 {
 
-    int &Board::operator[](City city){
+    int& Board::operator[](City city){
         return disease_level[city];
     }
 
@@ -22,19 +22,11 @@ namespace pandemic
     }
 
     bool Board::isConnected(City& src, City& dst){
-        
-        if(board_graph.at(src).count(dst) > 0){
-            return true;
-        }
-        return false;
+        return(board_graph.at(src).count(dst) > 0);
     }
 
     bool Board::isCured(Color c){
-
-        if(cured.count(c) > 0){
-            return true;
-        }
-        return false;
+        return(cured.count(c) > 0);
     }
 
     void Board::markCure(Color c){
@@ -46,26 +38,37 @@ namespace pandemic
     }
 
     bool Board::hasResearch(City& city){
-
-        if(research_stations.count(city) > 0){
-            return true;
-        }
-        return false;
+        return(research_stations.count(city) > 0);
     }
 
-    std::ostream &operator<<(std::ostream& out, const Board& b)
+    std::ostream &operator<<(std::ostream& out, const Board& board)
     {
-
-        std::cout << "operator";
-        return out;
-    }
-
-    void Board::print_cured(){
-        std:: cout << "{";
-        for(auto& color : cured){
-            // std::cout << colorString(color) + ",";
+        out << "******** Board **********\n" << endl;
+        for(auto& city : board.disease_level){
+            out << cityString(city.first) + " Disease Level: " << city.second << endl;
         }
-        std:: cout << "}\n";
+        out << "******** End Board ********\n" << endl;
+        out << "******** Research Stations ********\n" << endl;
+        out << "[";
+        for(auto& city : board.research_stations){
+            if(city != *board.research_stations.rbegin()){
+                out << cityString(city) + ",";
+            }
+            out << cityString(city);
+        }
+        out << "]\n";
+        
+        out << "********Cures Discovered********\n" << endl;
+        out << "[";
+        for(auto& color : board.cured){
+            if(color != *board.cured.rbegin()){
+             out << colorString(color) + ",";
+            }
+            out << colorString(color);
+        }
+        out << "]\n";
+        
+        return out;
     }
 
 

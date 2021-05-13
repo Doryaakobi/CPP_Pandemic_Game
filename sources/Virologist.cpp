@@ -9,7 +9,7 @@ Player &Virologist::treat(City city){
         if (board[city] == 0){
             throw std::invalid_argument("Current city" + cityString(curr_city) + "has a disease level of 0\n");
         }
-        else if (board.isCured(City_color.at(curr_city))){
+        if (board.isCured(City_color.at(curr_city))){
             // If the city color disease was discovered, treat action will drop level to 0
             board[city] = 0;
         }
@@ -18,7 +18,7 @@ Player &Virologist::treat(City city){
         } 
         hand.erase(city);
 
-        // std::cout << "Virologist treated " + cityString(curr_city) + "\n";
+        std::cout << "Virologist treated " + cityString(curr_city) + "\n";
     }
     else { return Player::treat(city);}
     return *this;
