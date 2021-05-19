@@ -17,7 +17,7 @@ namespace pandemic{
                 throw std::invalid_argument("you dumb fuck\n");
             }
             City temp = city;
-            if(board.Board::isConnected(curr_city,city)){
+            if(pandemic::Board::isConnected(curr_city,city)){
                 temp= curr_city;
                 curr_city = city;
                 std::cout << "Player drove from" + cityString(temp) + " to " + cityString(city) +  ".\n";

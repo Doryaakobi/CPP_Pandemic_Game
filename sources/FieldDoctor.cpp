@@ -5,7 +5,7 @@ using namespace std;
 
 Player& FieldDoctor::treat(City city){
 
-    if(board.Board::isConnected(curr_city,city)){
+    if(pandemic::Board::isConnected(curr_city,city)){
         if(board[city] == 0){
                 throw std::invalid_argument("Current city" + cityString(curr_city) + "has a disease level of 0\n");
             }if(board.isCured(City_color.at(city))){

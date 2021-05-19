@@ -26,7 +26,7 @@ namespace pandemic{
         void remove_cures();
         // void addplayer(pandemic::Player);
         int& operator[](City);
-        bool isConnected(City&,City&);
+        static bool isConnected(City&,City&);
         void markCure(Color);
         bool isCured(Color);
         bool hasResearch(City&);

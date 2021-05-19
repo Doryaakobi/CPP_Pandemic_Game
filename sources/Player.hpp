@@ -24,7 +24,7 @@ namespace pandemic{
             Player& fly_charter(City);
             Player& fly_shuttle(City);
             void show_hand();
-            std::string role(){return "Player expertise: " + expertise + "\n";}
+            std::string role(){return expertise;}
             friend std::ostream& operator<<(std::ostream&, const Player&);
 
             

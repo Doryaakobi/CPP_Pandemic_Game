@@ -44,13 +44,13 @@ namespace pandemic
     std::ostream &operator<<(std::ostream& out, const Board& board)
     {
         out << "******** Board **********\n" << endl;
-        for(auto& city : board.disease_level){
+        for(const auto& city : board.disease_level){
             out << cityString(city.first) + " Disease Level: " << city.second << endl;
         }
         out << "******** End Board ********\n" << endl;
         out << "******** Research Stations ********\n" << endl;
         out << "[";
-        for(auto& city : board.research_stations){
+        for(const auto& city : board.research_stations){
             if(city != *board.research_stations.rbegin()){
                 out << cityString(city) + ",";
             }
@@ -60,7 +60,7 @@ namespace pandemic
         
         out << "********Cures Discovered********\n" << endl;
         out << "[";
-        for(auto& color : board.cured){
+        for(const auto& color : board.cured){
             if(color != *board.cured.rbegin()){
              out << colorString(color) + ",";
             }
